@@ -5,7 +5,7 @@ This is a simple wrapper script that will be used to enable the use of a two-fac
 
 
 ### Other Software
-Idaho National Laboratory is a cutting edge research facility which is a constantly producing high quality research and software. Feel free to take a look at our other software and scientific offerings at:
+Idaho National Laboratory is a cutting edge research facility which is constantly producing high quality research and software. Feel free to take a look at our other software and scientific offerings at:
 
 [Primary Technology Offerings Page](https://www.inl.gov/inl-initiatives/technology-deployment)
 
@@ -59,13 +59,6 @@ $> conda config --add channels https://conda.software.inl.gov/public
 $> conda install ncrc
 ```
 
-Anaconda (will become deprecated):
-```bash
-$> conda activate base
-$> conda config --add channels idaholab
-$> conda install ncrc
-```
-
 You can also install NCRC from source:
 
 ```bash
@@ -82,11 +75,10 @@ usage: ncrc [-h] {install,remove,update,search,list} ...
 Manage NCRC packages
 
 positional arguments:
-  {install,remove,update,search,list}
+  {install,remove,search,list}
                         Available Commands.
     install             Install application
     remove              Prints information on how to remove application
-    update              Update application
     search              Perform a regular expression search for an NCRC
                         application
     list                List all available NCRC applications
@@ -132,12 +124,6 @@ PIN+TOKEN:
 Installing bison=2021_07_28...
 ```
 Install the latest version of Bison (default Conda behavior), or a specific version thereof.
-
-```bash
-$> conda activate bison
-$> ncrc update bison
-```
-Updates Bison (and everything else that may require an update).
 
 ```bash
 $> ncrc remove bison
