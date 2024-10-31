@@ -1,11 +1,14 @@
 # NCRC-client
 NCRC-client
 
-This is a simple wrapper script that will be used to enable the use of a two-factor authentication mechanism for downloading NCRC controlled codes through the popular "Conda" distribution mechanism.
+This is a simple wrapper script that will be used to enable the use of a two-factor authentication
+mechanism for downloading NCRC controlled codes through the popular "Conda" distribution mechanism.
 
 
 ### Other Software
-Idaho National Laboratory is a cutting edge research facility which is a constantly producing high quality research and software. Feel free to take a look at our other software and scientific offerings at:
+Idaho National Laboratory is a cutting edge research facility which is constantly producing high
+quality research and software. Feel free to take a look at our other software and scientific
+offerings at:
 
 [Primary Technology Offerings Page](https://www.inl.gov/inl-initiatives/technology-deployment)
 
@@ -34,59 +37,69 @@ limitations under the License.
 
 Licensing
 -----
-This software is licensed under the terms you may find in the file named "LICENSE" in this directory.
+This software is licensed under the terms you may find in the file named "LICENSE" in this
+directory.
 
 
 Developers
 -----
-By contributing to this software project, you are agreeing to the following terms and conditions for your contributions:
+By contributing to this software project, you are agreeing to the following terms and conditions for
+your contributions:
 
-You agree your contributions are submitted under the BSD 3-Clause license. You represent you are authorized to make the contributions and grant the license. If your employer has rights to intellectual property that includes your contributions, you represent that you have received permission to make contributions and grant the required license on behalf of that employer.
+You agree your contributions are submitted under the BSD 3-Clause license. You represent you are
+authorized to make the contributions and grant the license. If your employer has rights to
+intellectual property that includes your contributions, you represent that you have received
+permission to make contributions and grant the required license on behalf of that employer.
 
 
 # NCRC Client
 
-The NCRC client allows users to search, install, and upgrade Conda packages contained behind an RSA protected server. Technically, on the server-side, the packages produced for use by this tool must establish a certain prefix ('ncrc-' in this case). The end-user however need not worry about any prefix semantics. The NCRC client will handle whether or not users supply or not supply a prefix.
+The NCRC client allows users to search for, and install NCRC applications protected behind an RSA
+credential challenge. The NCRC client itself is open source, and available publicly.
 
-## Install NCRC
-
-The NCRC client is available via INL's public Conda channel repository or from the Anaconda Idaholab channel. The client must be installed into the base environment.
-
-INL Conda Repository:
-```bash
-$> conda activate base
-$> conda config --add channels https://conda.software.inl.gov/public
-$> conda install ncrc
-```
-
-Anaconda (will become deprecated):
-```bash
-$> conda activate base
-$> conda config --add channels idaholab
-$> conda install ncrc
-```
-
-You can also install NCRC from source:
+#### NCRC Client Installation
 
 ```bash
-$> git clone https://github.com/idaholab/ncrc-client
-$> cd ncrc-client
-$> pip install .
+$> conda install ncrc --channel https://conda.software.inl.gov/public
 ```
 
-## NCRC Syntax
+## Install an NCRC Application
+
+With the NCRC client installed, you can now use it to install an NCRC Application.
+
+> [!IMPORTANT]
+> You will first need to be granted access to the applicable application. To do so, head on over
+> to https://inl.gov/ncrc/ to request access.
+
+```bash
+$> ncrc install bison
+Username: johndoe
+PIN+TOKEN:
+Solving requirements for bison...
+```
+
+Once finished, follow the on-screen instructions:
+```bash
+$> conda activate bison
+$> bison-opt --version
+<version is displayed>
+```
+> [!NOTE]
+> The first time you run the application, the application may appear to hang. Consecutive runs will
+> not be hindered.
+
+### NCRC Syntax
 
 ```pre
-usage: ncrc [-h] {install,remove,update,search,list} ...
+usage: ncrc [-h] {install,remove,search,list} ...
 
 Manage NCRC packages
 
 positional arguments:
-  {install,remove,update,search,list}
+  {install,remove,search,list}
                         Available Commands.
     install             Install application
     remove              Prints information on how to remove application
-    update              Update application
     search              Perform a regular expression search for an NCRC
                         application
     list                List all available NCRC applications
@@ -95,50 +108,55 @@ optional arguments:
   -h, --help            show this help message and exit
 ```
 
-## NCRC Usage Examples
+### NCRC Examples Usages
 
+List all available NCRC applications:
 ```bash
 $> ncrc list
-Loading channels: done
-No match found for: ncrc-. Search: *ncrc-*
-# Name                       Version           Build  Channel
-ncrc-bison                2021_07_28         build_0  ncrc-applications
-ncrc-bison                2021_08_08         build_0  ncrc-applications
-ncrc-bison                2021_08_13         build_0  ncrc-applications
-ncrc-griffin              2021_07_29         build_0  ncrc-applications
-```
-List all available NCRC applications
+# Use 'ncrc search name-of-application' to list more detail
+# NCRC applications available:
 
+	sockeye
+	direwolf
+	griffin
+	pronghorn
+	relap7
+	bison
+	bluecrab
+	marmot
+	sabertooth
+```
+
+Lists all available versions of griffin:
 ```bash
 $> ncrc search griffin
 Loading channels: done
 # Name                       Version           Build  Channel
-ncrc-griffin              2021_07_29         build_0  ncrc-applications
-```
-Lists all available versions of griffin
+... <trimmed>
+ncrc-griffin              2024_09_30         build_0  ncrc-applications
+ncrc-griffin              2024_10_11         build_0  ncrc-applications
 
+Note: Only the last 90 days worth of packages are available. Older
+      packages can be made available upon request.
+      https://mooseframework.inl.gov/help/inl/applications.html
+```
+
+
+Installing a specific version:
 ```bash
-$> conda activate base
-$> ncrc install bison
+$> ncrc install griffin=2024_09_30
 Username: johndoe
-PIN+TOKEN: 
-Installing bison...
+PIN+TOKEN:
+Solving requirements for griffin...
+Downloading ncrc-griffin-2024_10_11-build_0.tar.bz2...
 
-
-$> conda activate base
-$> ncrc install bison=2021_07_28
-Username: johndoe
-PIN+TOKEN: 
-Installing bison=2021_07_28...
+# after installation completes
+$> conda activate griffin
+$> griffin-opt --version
+<the version is displayed>
 ```
-Install the latest version of Bison (default Conda behavior), or a specific version thereof.
 
-```bash
-$> conda activate bison
-$> ncrc update bison
-```
-Updates Bison (and everything else that may require an update).
-
+Removing an application:
 ```bash
 $> ncrc remove bison
  Due to the way ncrc wraps itself into conda commands, it is best to
@@ -147,4 +165,27 @@ $> ncrc remove bison
 	conda deactivate
 	conda env remove -n bison
 ```
-The NCRC script being a wrapper tool, is unable to perform such a function. The user must deactivate the environment and remove that environment using the appropraite conda commands.
+
+> [!NOTE]
+> The NCRC script being a wrapper tool, is unable to perform such a function. The user must
+> deactivate the environment and remove that environment using the appropraite conda commands.
+
+## Troubleshooting
+
+The occasional download failure is usually a victim of circumstance. Where the only solution is to
+"try again". If the issue persists, check with our Discussions group for any known outages:
+https://github.com/idaholab/moose/discussions/28494. If there are none, feel free to create a new
+discusion to report any failures.
+
+If you receive invalid credentials, you'll want to head on over to the NCRC page for contacting
+help: https://inl.gov/ncrc/ (Make/Manage Requests, contact information will be listed on the left).
+
+If you are running into a `command not found` error, chances are, you not operating within the
+Conda environment for which you installed the NCRC client. Be sure you installed the client into
+your (base) environment, or that you are in the (base) environment while attempting to invoke
+`ncrc`:
+
+```bash
+$> conda activate base
+$> ncrc --help
+```

@@ -448,6 +448,10 @@ def main(argv=None):
               '\n\n\tconda env list\n\tconda env remove -n \'name of environment\'\n')
     elif args.command in ['search', 'list']:
         ncrc.search_package()
+        if args.command == 'search':
+            print('\nNote: Only the last 90 days worth of packages are available. Older\n'
+                  '      packages can be made available upon request.\n'
+                  '      https://mooseframework.inl.gov/help/inl/applications.html')
 
 if __name__ == '__main__':
     main()
