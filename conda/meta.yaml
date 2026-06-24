@@ -33,7 +33,7 @@ test:
   imports:
     - ncrc
   commands:
-    - ncrc --help
+    - CONDA_DEFAULT_ENV=base ncrc --help
 
 about:
   home: https://github.com/idaholab/ncrc-client
