@@ -242,7 +242,7 @@ To use {app}, activate the environment:
 Documentation is locally available by activating this environment and pointing
 your web browser to the file denoted by echoing the following variable:
 
-    > echo ${app.upper()}_DOCS
+    > echo ${app}_DOCS
 
 Additional usage information is also available at:
 
