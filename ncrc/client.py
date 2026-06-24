@@ -86,6 +86,7 @@ class Client:
         self.insecure: bool = getattr(self.args, "insecure", False)
         """Whether or not to use insecure access."""
 
+        # Be more quiet about using insecure if explicitly requested
         if self.insecure:
             requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
 
