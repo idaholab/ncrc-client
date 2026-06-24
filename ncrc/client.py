@@ -33,6 +33,7 @@ import urllib3
 from urllib3.exceptions import InsecureRequestWarning
 
 from conda.api import SubdirData
+from conda.base.context import context
 from conda.cli.main import main_subshell as conda_main_subshell
 from conda.gateways.connection.session import CondaSession
 
@@ -90,6 +91,7 @@ class Client:
         # Be more quiet about using insecure if explicitly requested
         if self.insecure:
             requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
+            context.ssl_verify = False
 
         self.setup_session()
 
@@ -146,12 +148,21 @@ class Client:
             ):
                 return
 
+        # Clear state
+        self.session.cookies.clear()
+
         # Get the csrftoken
         response = self.session.get(f"{url}/webauthentication", verify=verify)
         if response.status_code != 200:
             error(f"Could not connect to {url}")
 
-        token = re.findall(r'name="csrftoken" value="(\w+)', response.text)
+        token = None
+        search = re.search(r'name="csrftoken" value="([A-Z0-9]+)"', response.text)
+        if search is None:
+            error(f"Login page missing token for {url}")
+        else:
+            token = search.group(1)
+
         username = input("INL HPC Username: ")
         passcode = getpass.getpass("INL HPC PIN+TOKEN: ")
 
@@ -161,7 +172,7 @@ class Client:
                 f"{url}/webauthentication",
                 verify=verify,
                 data={
-                    "csrftoken": token[0],
+                    "csrftoken": token,
                     "username": username,
                     "passcode": passcode,
                 },
