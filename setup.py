@@ -14,9 +14,9 @@ setup(
     name = "ncrc",
     version = version_str,
 
-    author = "Jason Miller",
-    author_email = "jason.miller@inl.gov",
-    description = "Helper script to facilitate access to secure Conda channels",
+    author = "Logan Harbour",
+    author_email = "logan.harbour@inl.gov",
+    description = "Installs protected applications from the INL NCRC",
     long_description = read("README.md"),
     license = "BSD-3-Clause",
     keywords = "RSA SecurID token MFA 2FA channel",

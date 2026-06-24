@@ -1,3 +1,4 @@
-""" Set Version """
-#pylint: disable=invalid-name
-version_str = "1.22"
+"""Set Version"""
+
+# pylint: disable=invalid-name
+version_str = "2.0"
