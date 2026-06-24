@@ -1,7 +1,7 @@
 {% set build = 0 %}
 {% set strbuild = "build_" + build|string %}
 {% set name = "ncrc" %}
-{% set version = "2.0" %}
+{% set version = "2.1" %}
 
 package:
   name: {{ name }}
@@ -20,12 +20,12 @@ build:
 
 requirements:
   host:
-    - python >=3.6
+    - python >=3.10
     - requests
     - conda
     - pip
   run:
-    - python >=3.6
+    - python >=3.10
     - requests
     - conda
 
@@ -33,7 +33,7 @@ test:
   imports:
     - ncrc
   commands:
-    - ncrc --help
+    - CONDA_DEFAULT_ENV=base ncrc --help
 
 about:
   home: https://github.com/idaholab/ncrc-client
