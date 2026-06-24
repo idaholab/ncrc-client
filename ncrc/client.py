@@ -19,6 +19,12 @@ def error(*message):
 
 
 if not find_spec("conda"):
+    CONDA_DEFAULT_ENV = os.environ.get("CONDA_DEFAULT_ENV")
+    if CONDA_DEFAULT_ENV is not None and CONDA_DEFAULT_ENV != "base":
+        error(
+            "Not in the base Conda environment.",
+            "Switch environments with `conda deactivate` and install and run `ncrc` there instead.",
+        )
     error("Unable to import Conda", "Please install conda: `conda install conda`")
 
 import requests
