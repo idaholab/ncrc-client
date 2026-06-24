@@ -1,11 +1,5 @@
-> [!WARNING]
-> **This repository has been archived and is no longer maintained.**
-> The code is provided for historical reference and may contain unpatched
-> or unknown vulnerabilities. It should not be used in production systems.
-
----
-
 # NCRC-client
+
 NCRC-client
 
 This is a simple wrapper script that will be used to enable the use of a two-factor authentication
