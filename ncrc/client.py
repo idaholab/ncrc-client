@@ -152,7 +152,7 @@ class Client:
         self.session.cookies.clear()
 
         # Get the csrftoken
-        response = self.session.get(f"{url}/webauthentication", verify=verify)
+        response = self.session.get(f"{url}/webauthentication", verify=verify, timeout=5)
         if response.status_code != 200:
             error(f"Could not connect to {url}")
 
@@ -176,6 +176,7 @@ class Client:
                     "username": username,
                     "passcode": passcode,
                 },
+                timeout=5
             )
 
         except requests.exceptions.ConnectTimeout:
